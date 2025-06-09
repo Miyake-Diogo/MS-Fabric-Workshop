@@ -1,0 +1,10 @@
+[project]
+name = "databot"
+version = "0.1.0"
+description = "Data Chatbot for Azure AI Foundry Projects"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "azure-ai-projects>=1.0.0b11",
+    "azure-identity>=1.23.0",
+]
