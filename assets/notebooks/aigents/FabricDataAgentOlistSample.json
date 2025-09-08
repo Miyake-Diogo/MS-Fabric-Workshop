@@ -1,0 +1,17 @@
+{
+    "What are the top 5 best-selling products by quantity?": "SELECT TOP 5 dp.category_english, COUNT(*) AS total_sold FROM [gold].bridge_order_items boi JOIN [gold].dim_product dp ON CAST(boi.product_sk AS BIGINT) = dp.product_sk GROUP BY dp.category_english ORDER BY total_sold DESC;",
+    "Which sellers have the highest total sales amount?": "SELECT TOP 5 ds.natural_seller_key, SUM(fs.sales_amount) AS total_sales FROM [gold].fact_sales fs JOIN [gold].dim_seller ds ON fs.seller_sk = CAST(ds.seller_sk AS VARCHAR) GROUP BY ds.natural_seller_key ORDER BY total_sales DESC;",
+    "What is the average review score by product category?": "SELECT dp.category_english, AVG(fs.review_score * 1.0) AS avg_score FROM [gold].fact_sales fs JOIN [gold].dim_product dp ON fs.product_sk = CAST(dp.product_sk AS VARCHAR) GROUP BY dp.category_english;",
+    "Which cities have the most customers?": "SELECT TOP 5 customer_city, COUNT(*) AS total_customers FROM [gold].dim_customers GROUP BY customer_city ORDER BY total_customers DESC;",
+    "What is the total revenue per payment type?": "SELECT payment_type, SUM(payment_amount) AS total_revenue FROM [gold].fact_sales GROUP BY payment_type;",
+    "Which product category has the highest shipping cost on average?": "SELECT dp.category_english, AVG(fs.shipping_cost) AS avg_shipping FROM [gold].fact_sales fs JOIN [gold].dim_product dp ON fs.product_sk = CAST(dp.product_sk AS VARCHAR) GROUP BY dp.category_english ORDER BY avg_shipping DESC;",
+    "What is the distribution of order statuses?": "SELECT order_status, COUNT(*) AS total_orders FROM [gold].fact_sales GROUP BY order_status;",
+    "Which state has the highest number of sellers?": "SELECT seller_state, COUNT(*) AS total_sellers FROM [gold].dim_seller GROUP BY seller_state ORDER BY total_sellers DESC;",
+    "What is the average delivery time in days?": "SELECT AVG(DATEDIFF(DAY, purchase_date, delivery_date)) AS avg_delivery_days FROM [gold].fact_sales WHERE delivery_date IS NOT NULL;",
+    "Which customers have made the most purchases?": "SELECT TOP 5 dc.natural_customer_key, COUNT(*) AS total_orders FROM [gold].fact_sales fs JOIN [gold].dim_customers dc ON fs.customer_sk = CAST(dc.customer_sk AS VARCHAR) GROUP BY dc.natural_customer_key ORDER BY total_orders DESC;",
+    "What is the total number of orders per month?": "SELECT FORMAT(purchase_date, 'yyyy-MM') AS month, COUNT(*) AS total_orders FROM [gold].fact_sales GROUP BY FORMAT(purchase_date, 'yyyy-MM') ORDER BY month;",
+    "Which products have the highest average review sentiment?": "SELECT TOP 5 dp.category_english, AVG(CASE WHEN fs.review_sentiment = 'positive' THEN 1 WHEN fs.review_sentiment = 'neutral' THEN 0.5 ELSE 0 END) AS avg_sentiment_score FROM [gold].fact_sales fs JOIN [gold].dim_product dp ON fs.product_sk = CAST(dp.product_sk AS VARCHAR) GROUP BY dp.category_english ORDER BY avg_sentiment_score DESC;",
+    "What is the average product weight by category?": "SELECT category_english, AVG(product_weight_g) AS avg_weight FROM [gold].dim_product GROUP BY category_english;",
+    "Which zip codes have the most customers?": "SELECT TOP 5 customer_zip_code_prefix, COUNT(*) AS total_customers FROM [gold].dim_customers GROUP BY customer_zip_code_prefix ORDER BY total_customers DESC;",
+    "What is the correlation between shipping cost and review score?": "SELECT shipping_cost, review_score FROM [gold].fact_sales WHERE shipping_cost IS NOT NULL AND review_score IS NOT NULL;"
+}
